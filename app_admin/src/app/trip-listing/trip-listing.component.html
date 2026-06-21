@@ -1,5 +1,5 @@
-<div>
-  <button (click)="addTrip()" class="btn btn-info">Add Trip</button>
+<div> 
+  <button (click)="addTrip()" class="btn btn-info" *ngIf="isLoggedIn()">Add Trip</button>
 </div>
 
 <p>{{ message }}</p>
