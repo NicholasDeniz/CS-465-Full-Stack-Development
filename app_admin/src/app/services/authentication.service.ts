@@ -46,7 +46,7 @@ export class AuthenticationService {
 
     // Boolean to determine if we are logged in and the token is
     // still valid. Even if we have a token we will still have to
-    // reauthenticate if the token has expired.
+    // authenticate it again if the token has expired.
     public isLoggedIn(): boolean {
         const token: string = this.getToken();
 
