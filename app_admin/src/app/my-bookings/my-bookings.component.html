@@ -1,0 +1,30 @@
+<section aria-labelledby="my-bookings-heading">
+    <h2 id="my-bookings-heading">My Bookings</h2>
+
+    <!-- Shows success, empty list, and error-->
+    <p *ngIf="message">{{ message }} </p>
+
+    <!-- Loops through array, creating a card for each booking -->
+    <div *ngFor="let booking of bookings">
+
+        <div *ngIf="booking.trip"> <!-- Makes sure booking has trip info -->
+
+            <h3>{{ booking.trip.name }}</h3> <!-- Display info from populated trip object -->
+
+            <p>Resort: {{ booking.trip.resort }}</p>
+
+            <p>Length: {{ booking.trip.length }}</p>
+
+            <p>Starts: {{ booking.trip.start | date:'mediumDate' }}</p> 
+
+            <p>Price: {{ booking.trip.perPerson | currency:'USD':'symbol' }} per person</p>
+
+            <p>Status: {{ booking.status }} </p>
+
+            <!-- Give the bookings MongoDB ID to the cancel method -->
+             <button type="button" (click)="cancelBooking(booking._id)"> Cancel Booking</button>
+
+             <hr>
+        </div>
+    </div>
+</section>

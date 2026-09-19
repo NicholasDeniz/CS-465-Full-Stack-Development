@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 
 @Component({
@@ -14,16 +13,24 @@ import { RouterModule } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
     constructor(
-        private authenticationService: AuthenticationService
+        private authenticationService: AuthenticationService,
+        private router: Router // Returns the user to the trips page when logged out
     ) { }
 
     ngOnInit() { }
+
+    public isCustomer(): boolean {
+        return this.authenticationService.isCustomer();
+    }
 
     public isLoggedIn(): boolean {
         return this.authenticationService.isLoggedIn();
     }
 
     public onLogout(): void {
-        return this.authenticationService.logout();
+        this.authenticationService.logout(); // Removed saved JWT
+
+        // Leaves customer pages
+        this.router.navigate(['']);
     }
 }

@@ -21,16 +21,21 @@
                 Trips
                 <span class="sr-only">(current)</span>
             </a>
+
+            <!-- So only logged in users see the link -->
+            <a class="nav-link" routerLink="my-bookings" *ngIf="isCustomer()">
+                My Bookings
+            </a>
         </div>
     </div>
 
     <div class="navbar-end">
         <a class="nav-item" routerLink="login" *ngIf="!isLoggedIn()">
-            <span class="has-icon-left">Log In</span>
+            Log In
         </a>
 
         <a class="nav-item active" (click)="onLogout()" *ngIf="isLoggedIn()">
-            <span class="has-icon-left">Log Out</span>
+            Log out
         </a>
     </div>
 </nav>

@@ -1,4 +1,4 @@
-import { inject, Inject, Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { BROWSER_STORAGE } from '../storage';
 import { User } from '../models/user';
 import { AuthResponse } from '../models/auth-response';
@@ -58,14 +58,32 @@ export class AuthenticationService {
         return false;
     }
 
-    // Retrieve the current user. This function should only be called
+    // Retrieve the current user and role from JWT. This function should only be called
     // after the calling method has checked to make sure that the user
     // isLoggedIn.
     public getCurrentUser(): User {
         const token: string = this.getToken();
-        const { email, name } = JSON.parse(atob(token.split('.')[1]));
+        const { email, name, role } = JSON.parse(atob(token.split('.')[1]));
 
-        return { email, name } as User;
+        return { email, name, role } as User;
+    }
+
+    // Returns true if the token is valid and the role is admin
+    public isAdmin(): boolean {
+        if (this.isLoggedIn()) {
+            const user: User = this.getCurrentUser();
+            return user.role === 'admin'
+        }
+        return false; // If expired token return false
+    }
+
+    // Returns true if token is valid and the role is customer
+    public isCustomer(): boolean {
+        if (this.isLoggedIn()) {
+            const user: User = this.getCurrentUser();
+            return user.role === 'customer';
+        }
+        return false; // If expired token return false
     }
 
     // Login method that leverages the login method in tripDataService.
@@ -78,7 +96,6 @@ export class AuthenticationService {
             .subscribe({
                 next: (value: any) => {
                     if (value) {
-                        console.log(value);
                         this.authResp = value;
                         this.saveToken(this.authResp.token);
                     }
@@ -101,7 +118,6 @@ export class AuthenticationService {
             .subscribe({
                 next: (value: any) => {
                     if (value) {
-                        console.log(value);
                         this.authResp = value;
                         this.saveToken(this.authResp.token);
                     }

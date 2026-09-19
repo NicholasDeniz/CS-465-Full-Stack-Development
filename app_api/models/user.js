@@ -12,6 +12,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     }, 
+    role: { // Role will ask the question, "What is a user allowed to do?"
+        type: String,
+        enum: ['customer', 'admin'], // A enum would limit values to only customer and admin instead of allowing anything else
+        default: 'customer', //Defaulted to customer as that should be the access a new account should be granted. Hads the lowest of permissions
+    },
     hash: String,
     salt: String,
 });
@@ -36,6 +41,7 @@ userSchema.methods.generateJWT = function() {
         _id: this._id,
         email: this.email,
         name: this.name,
+        role: this.role // When the user logs in the application needs to know if their a customer of admin
     },
     process.env.JWT_SECRET, //SECRET stored in .env file
     { expiresIn: '1h' }); //Token expires an hour from creation

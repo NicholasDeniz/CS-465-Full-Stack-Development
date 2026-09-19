@@ -5,6 +5,7 @@ import { Trip } from '../models/trip';
 import { User } from '../models/user';
 import { AuthResponse } from '../models/auth-response';
 import { BROWSER_STORAGE } from '../storage';
+import { Booking } from '../models/booking';
 
 @Injectable({
     providedIn: 'root'
@@ -16,7 +17,28 @@ export class TripDataService {
     ) {}
 
     url = 'http://localhost:3000/api/trips';
+    bookingUrl = 'http://localhost:3000/api/bookings';
     baseUrl = 'http://localhost:3000/api';
+
+    // Delete one travel package only for an admin
+    deleteTrip(tripCode: string): Observable<void> {
+        return this.http.delete<void>(this.url + '/' + tripCode);
+    }
+
+    // Retrieve bookings owned by the customer that is logged in
+    getMyBookings(): Observable<Booking[]> {
+        return this.http.get<Booking[]>(this.bookingUrl);
+    }
+
+    // Create a booking for the trip. Customer ID is from the valid JWT
+    bookTrip(tripCode: string): Observable<Booking> {
+        return this.http.post<Booking>(this.bookingUrl + '/' + tripCode, {});
+    }
+
+    // Cancel booking ownded by a customer that is logged in. API matches both the booking ID and JWT ID
+    cancelBooking(bookingId: string): Observable<void> {
+        return this.http.delete<void>(this.bookingUrl + '/id/' + bookingId);
+    }
 
     getTrip(tripCode: string): Observable<Trip[]> {
         return this.http.get<Trip[]>(this.url + '/' + tripCode);

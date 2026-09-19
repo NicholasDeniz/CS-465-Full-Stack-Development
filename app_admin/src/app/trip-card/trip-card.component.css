@@ -1,0 +1,17 @@
+:host {
+    display: block;
+    height: 100%
+}
+
+.card {
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Keep trip images smaller and consistent */
+.card-img-top {
+    display: block;
+    width: 120%;
+    height: 250px;
+    object-fit: cover;
+}

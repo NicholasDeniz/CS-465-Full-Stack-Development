@@ -1,11 +1,22 @@
-<div> 
-  <button (click)="addTrip()" class="btn btn-info" *ngIf="isLoggedIn()">Add Trip</button>
-</div>
+<!-- Only admins can see Add Trip -->
+<button type="button"
+        *ngIf="isAdmin()"
+        (click)="addTrip()"
+        class="btn btn-info">
+        Add Trip
+</button>
+ <!-- show trip count or error message -->
+<p>
+  {{ message }}
+</p>
 
-<p>{{ message }}</p>
+<div *ngFor="let trip of trips">
 
-<div class="row">
-  <div *ngFor="let trip of trips" class="col-md-4">
-    <app-trip-card [trip]="trip" class="card-deck mt-2"></app-trip-card>
-  </div>
+  <!-- Give one trip to TripCardComponent then listen for a succesful delete -->
+  <app-trip-card
+    [trip]="trip"
+
+    (tripChanged)="refreshTrips()">
+  </app-trip-card>
+    
 </div>

@@ -1,0 +1,12 @@
+:host {
+    display: block;
+    padding-top: 2rem;
+}
+
+.car {
+    height: 100%;
+}
+
+.card-title {
+    font-size: 1.50rem;
+}

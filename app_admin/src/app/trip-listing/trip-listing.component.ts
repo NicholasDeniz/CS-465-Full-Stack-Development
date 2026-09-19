@@ -30,8 +30,15 @@ export class TripListingComponent implements OnInit {
   public addTrip(): void {
     this.router.navigate(['/add-trip']);
   }
-  public isLoggedIn(): boolean {
-    return this.authenticationService.isLoggedIn();
+  
+  // Return true when the user logeed in is an admin
+  public isAdmin(): boolean {
+    return this.authenticationService.isAdmin();
+  }
+
+  public refreshTrips(): void {
+    // Get updates list so deleted card disappears
+    this.getStuff();
   }
 
   private getStuff(): void {
