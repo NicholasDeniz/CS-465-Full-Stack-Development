@@ -9,6 +9,7 @@
         formControlName="code"
         placeholder="Code"
         class="form-control"
+        readonly
         [ngClass]="{ 'is-invalid': submitted && f['code'].errors }"
       />
 
@@ -90,7 +91,9 @@
     <div class="form-group">
       <label>Per Person:</label>
       <input
-        type="text"
+        type="number"
+        min="0"
+        step="0.01"
         formControlName="perPerson"
         placeholder="Per Person"
         class="form-control"
