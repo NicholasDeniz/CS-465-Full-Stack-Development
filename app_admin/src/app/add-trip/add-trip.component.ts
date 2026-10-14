@@ -29,7 +29,7 @@ ngOnInit() {
     length: ['', Validators.required],
     start: ['', Validators.required],
     resort: ['', Validators.required],
-    perPerson: [null, ['', Validators.required, Validators.min(0)]],
+    perPerson: [null, [Validators.required, Validators.min(0)]],
     image: ['', Validators.required],
     description: ['', Validators.required],
   })
