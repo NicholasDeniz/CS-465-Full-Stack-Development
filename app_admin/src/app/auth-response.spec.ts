@@ -1,4 +1,4 @@
-import { AuthResponse } from './auth-response';
+import { AuthResponse } from './models/auth-response';
 
 describe('AuthResponse', () => {
   it('should create an instance', () => {
